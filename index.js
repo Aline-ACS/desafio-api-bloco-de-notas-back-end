@@ -83,16 +83,12 @@ server.get('/notes/:id', async (req,res) => {
 
 //deletar nota pelo id
 server.delete('/notes/:id', async (req,res) => {   
-    let noteDelete;
     const {id} = req.params;
 
     await database.query(`DELETE FROM desafio_api_bloco_de_notas WHERE id = ${id};`,
         {type: database.QueryTypes.DELETE})
-        .then(result => {
-            noteDelete = result;
-        })
         .catch(err => {
-            return res.json('erro ao excluir nota');
+            return res.json(err);
     });
 
     return res.json({
